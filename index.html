@@ -1,0 +1,1331 @@
+
+
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chamroeun Portfolio</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+  <!-- Kantumruy Pro Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@100..700&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Kantumruy Pro', sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#050816;
+      color:white;
+      overflow-x:hidden;
+      scrollbar-width:none;
+      scrollbar-color:transparent transparent;
+      position:relative;
+      isolation:isolate;
+    }
+
+    .bg-glow{
+      position:absolute;
+      width:500px;
+      height:500px;
+      border-radius:50%;
+      filter:blur(120px);
+      animation:glowDrift 12s ease-in-out infinite alternate;
+    }
+
+    .glow1{
+      background:#00f7ff44;
+      top:-150px;
+      left:-150px;
+    }
+
+    .glow2{
+      background:#8b5cf644;
+      bottom:-150px;
+      right:-150px;
+      animation-delay:-5s;
+    }
+
+    .ambient-background{
+      inset:0;
+      overflow:hidden;
+      pointer-events:none;
+      position:fixed;
+      z-index:0;
+    }
+
+    .floating-tile{
+      --tile-rotate:0deg;
+      align-items:center;
+      animation:tileDrift 15s ease-in-out infinite;
+      background:linear-gradient(145deg, rgba(37,47,69,.46), rgba(20,28,47,.25));
+      border:1px solid rgba(0,247,255,.13);
+      border-radius:38px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 18px 60px rgba(0,0,0,.08);
+      color:rgba(0,247,255,.24);
+      display:flex;
+      font-size:2.1rem;
+      height:126px;
+      justify-content:center;
+      position:absolute;
+      transform:rotate(var(--tile-rotate));
+      width:150px;
+    }
+
+    .floating-tile::after{
+      background:linear-gradient(110deg, transparent, rgba(0,247,255,.1), transparent);
+      border-radius:inherit;
+      content:"";
+      inset:0;
+      position:absolute;
+    }
+
+    .tile-terminal{
+      --tile-rotate:-9deg;
+      animation-delay:-3s;
+      left:-42px;
+      top:20vh;
+    }
+
+    .tile-globe{
+      --tile-rotate:10deg;
+      animation-delay:-8s;
+      right:7vw;
+      top:42vh;
+    }
+
+    .tile-router{
+      --tile-rotate:-12deg;
+      animation-delay:-5s;
+      bottom:17vh;
+      left:9vw;
+    }
+
+    .tile-cpu{
+      --tile-rotate:8deg;
+      animation-delay:-11s;
+      right:-32px;
+      top:72vh;
+    }
+
+    .tile-outline{
+      --tile-rotate:15deg;
+      animation-delay:-1s;
+      border-color:rgba(139,92,246,.14);
+      bottom:37vh;
+      color:rgba(139,92,246,.18);
+      height:90px;
+      left:43vw;
+      width:110px;
+    }
+
+    nav,
+    section,
+    footer{
+      position:relative;
+      z-index:1;
+    }
+
+    .navbar{
+      background:rgba(255,255,255,0.05)!important;
+      backdrop-filter:blur(15px);
+      border-bottom:1px solid rgba(255,255,255,0.08);
+      transition:background .3s ease, box-shadow .3s ease;
+    }
+
+    .navbar.scrolled{
+      background:rgba(5,8,22,0.9)!important;
+      box-shadow:0 12px 35px rgba(0,0,0,0.2);
+    }
+
+    .navbar-brand{
+      font-size:2rem;
+      font-weight:700;
+      color:white!important;
+    }
+
+    .navbar-brand span{
+      color:#00f7ff;
+    }
+
+    .nav-link{
+      color:#ccc!important;
+      margin-left:15px;
+      transition:0.3s;
+    }
+
+    .nav-link:hover{
+      color:#00f7ff!important;
+    }
+
+    .language-toggle{
+      align-items:center;
+      background:rgba(0,247,255,0.08);
+      border:1px solid rgba(0,247,255,0.25);
+      border-radius:50px;
+      color:#00f7ff;
+      display:inline-flex;
+      font-weight:600;
+      gap:8px;
+      margin-left:20px;
+      padding:8px 15px;
+      transition:background .3s ease, transform .3s ease;
+    }
+
+    .language-toggle:hover{
+      background:rgba(0,247,255,0.18);
+      transform:translateY(-2px);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding-top:120px;
+    }
+
+    .badge-custom{
+      display:inline-block;
+      padding:10px 20px;
+      border-radius:50px;
+      background:rgba(0,247,255,0.1);
+      border:1px solid rgba(0,247,255,0.2);
+      color:#00f7ff;
+      margin-bottom:25px;
+      animation:pulseBorder 3s ease-in-out infinite;
+    }
+
+    .badge-custom i,
+    .btn-custom i{
+      margin-right:8px;
+    }
+
+    .feature-icon{
+      color:#00f7ff;
+      font-size:1.45rem;
+      margin-right:12px;
+    }
+
+    .cta-icon{
+      color:#00f7ff;
+      font-size:0.85em;
+      margin-left:10px;
+    }
+
+    .hero-title{
+      font-size:5rem;
+      font-weight:800;
+      line-height:1;
+    }
+
+    .gradient-text{
+      background:linear-gradient(90deg,#00f7ff,#8b5cf6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .hero-text{
+      color:#aaa;
+      font-size:1.1rem;
+      line-height:1.8;
+      margin-top:25px;
+    }
+
+    .voice-controls{
+      align-items:center;
+      display:flex;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    .voice-button{
+      align-items:center;
+      background:rgba(0,247,255,.1);
+      border:1px solid rgba(0,247,255,.3);
+      border-radius:50px;
+      color:#00f7ff;
+      display:inline-flex;
+      font-weight:600;
+      gap:9px;
+      padding:11px 18px;
+      transition:background .3s ease, box-shadow .3s ease, transform .3s ease;
+    }
+
+    .voice-button:hover{
+      background:rgba(0,247,255,.18);
+      box-shadow:0 0 25px rgba(0,247,255,.15);
+      transform:translateY(-2px);
+    }
+
+    .voice-button:disabled{
+      cursor:not-allowed;
+      opacity:.55;
+      transform:none;
+    }
+
+    .voice-status{
+      color:#8f9bb0;
+      font-size:.95rem;
+    }
+
+    .btn-custom{
+      padding:15px 35px;
+      border:none;
+      border-radius:18px;
+      font-weight:600;
+      transition:0.4s;
+    }
+
+    .btn-primary-custom{
+      background:#00f7ff;
+      color:black;
+      box-shadow:0 0 30px rgba(0,247,255,0.3);
+    }
+
+    .btn-primary-custom:hover{
+      transform:translateY(-5px);
+    }
+
+    .btn-dark-custom{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.1);
+      color:white;
+    }
+
+    .btn-dark-custom:hover{
+      border-color:rgba(0,247,255,0.4);
+      color:#00f7ff;
+      transform:translateY(-5px);
+    }
+
+    .glass-card{
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      backdrop-filter:blur(15px);
+      border-radius:30px;
+      padding:30px;
+      transition:0.4s;
+    }
+
+    .glass-card:hover{
+      transform:translateY(-10px);
+      border-color:#00f7ff55;
+    }
+
+    .device-showcase{
+      background:transparent;
+      border:0;
+      padding:18px 0;
+    }
+
+    .tech-card-stack{
+      display:grid;
+      gap:20px;
+      margin:0 auto;
+      max-width:390px;
+    }
+
+    .tech-card{
+      --card-delay:0s;
+      align-items:center;
+      animation:cardFloat 5s ease-in-out infinite;
+      animation-delay:var(--card-delay);
+      background:#252f45;
+      border:1px solid rgba(150,169,198,.15);
+      border-radius:36px;
+      display:flex;
+      gap:18px;
+      min-height:112px;
+      overflow:hidden;
+      padding:22px 28px;
+      position:relative;
+      transition:border-color .35s ease, box-shadow .35s ease, transform .35s ease;
+    }
+
+    .tech-card::after{
+      background:linear-gradient(100deg, transparent, rgba(0,247,255,.13), transparent);
+      content:"";
+      height:100%;
+      left:-80%;
+      position:absolute;
+      top:0;
+      transform:skewX(-18deg);
+      width:52%;
+    }
+
+    .tech-card:nth-child(1){ --card-delay:0s; }
+    .tech-card:nth-child(2){ --card-delay:-1.2s; }
+    .tech-card:nth-child(3){ --card-delay:-2.4s; }
+    .tech-card:nth-child(4){ --card-delay:-3.6s; }
+
+    .tech-card.active{
+      border-color:rgba(0,247,255,.65);
+      box-shadow:0 12px 38px rgba(0,247,255,.11), inset 0 0 25px rgba(0,247,255,.05);
+    }
+
+    .tech-card.active::after{
+      animation:cardShine .75s ease;
+    }
+
+    .tech-card.active .feature-icon{
+      filter:drop-shadow(0 0 10px rgba(0,247,255,.55));
+    }
+
+    .tech-card h5{
+      align-items:center;
+      display:flex;
+      font-size:1.15rem;
+      margin:0 0 8px;
+    }
+
+    .tech-card p{
+      color:rgba(201,210,225,.58)!important;
+      font-size:1rem;
+    }
+
+    .profile-box img{
+      width:130px;
+      height:130px;
+      border-radius:30px;
+      background:linear-gradient(135deg,#00f7ff,#8b5cf6);
+      border: 3px solid rgba(255,255,255,0.1);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:4rem;
+      font-weight:700;
+      margin:auto;
+      box-shadow:0 0 35px rgba(0,247,255,0.22);
+      animation:profileFloat 5s ease-in-out infinite;
+    }
+
+    .section-title{
+      font-size:3rem;
+      font-weight:700;
+      margin-bottom:20px;
+    }
+
+    .section-subtitle{
+      color:#00f7ff;
+      letter-spacing:3px;
+      text-transform:uppercase;
+      margin-bottom:10px;
+    }
+
+    .skill-box{
+      text-align:center;
+      padding:25px;
+      border-radius:25px;
+      background:rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.08);
+      transition:0.4s;
+    }
+
+    .skill-box:hover{
+      transform:translateY(-8px);
+      border-color:#00f7ff55;
+    }
+
+    .project-card{
+      height:100%;
+    }
+
+    .project-category{
+      color:#00f7ff;
+      font-size:0.9rem;
+      letter-spacing:2px;
+      text-transform:uppercase;
+    }
+
+    .experience-card{
+      height:100%;
+    }
+
+    .experience-card .hero-text{
+      margin-top:14px;
+    }
+
+    .education-timeline{
+      display:grid;
+      gap:22px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      margin-top:42px;
+    }
+
+    .education-card{
+      align-items:flex-start;
+      display:flex;
+      gap:22px;
+      height:100%;
+      padding:27px;
+    }
+
+    .education-card:first-child{
+      border-color:rgba(0,247,255,.38);
+      grid-column:span 2;
+    }
+
+    .education-card .hero-text{
+      margin-top:14px;
+    }
+
+    .education-icon{
+      align-items:center;
+      background:rgba(0,247,255,.1);
+      border:1px solid rgba(0,247,255,.2);
+      border-radius:18px;
+      color:#00f7ff;
+      display:flex;
+      flex:0 0 52px;
+      font-size:1.45rem;
+      height:52px;
+      justify-content:center;
+    }
+
+    .education-content{
+      flex:1;
+    }
+
+    .education-school{
+      color:#fff;
+      font-size:1.2rem;
+      font-weight:600;
+      margin:9px 0 5px;
+    }
+
+    .education-program{
+      color:#aeb9ce;
+      margin:0;
+    }
+
+    .reveal{
+      opacity:0;
+      transform:translateY(34px);
+      transition:opacity .8s ease, transform .8s ease;
+      transition-delay:var(--reveal-delay, 0ms);
+    }
+
+    .reveal.is-visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    .education-card.reveal.is-visible:hover,
+    .experience-card.reveal.is-visible:hover,
+    .project-card.reveal.is-visible:hover{
+      transform:translateY(-10px);
+    }
+
+    @keyframes glowDrift{
+      from{
+        transform:translate3d(-20px, -15px, 0) scale(0.94);
+      }
+      to{
+        transform:translate3d(25px, 20px, 0) scale(1.08);
+      }
+    }
+
+    @keyframes profileFloat{
+      0%, 100%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(-12px);
+      }
+    }
+
+    @keyframes tileDrift{
+      0%, 100%{
+        transform:translate3d(0, 0, 0) rotate(var(--tile-rotate));
+      }
+      45%{
+        transform:translate3d(24px, -32px, 0) rotate(calc(var(--tile-rotate) + 6deg));
+      }
+      72%{
+        transform:translate3d(-14px, 18px, 0) rotate(calc(var(--tile-rotate) - 4deg));
+      }
+    }
+
+    @keyframes cardFloat{
+      0%, 100%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(-7px);
+      }
+    }
+
+    @keyframes cardShine{
+      from{
+        left:-80%;
+      }
+      to{
+        left:130%;
+      }
+    }
+
+    @keyframes pulseBorder{
+      0%, 100%{
+        box-shadow:0 0 0 rgba(0,247,255,0);
+      }
+      50%{
+        box-shadow:0 0 28px rgba(0,247,255,0.16);
+      }
+    }
+
+    footer{
+      border-top:1px solid rgba(255,255,255,0.08);
+      padding:30px;
+      text-align:center;
+      color:#888;
+    }
+
+    @media(max-width:768px){
+      .hero-title{
+        font-size:3rem;
+      }
+
+      .section-title{
+        font-size:2.2rem;
+      }
+
+      .language-toggle{
+        margin:15px 0 0;
+      }
+
+      .tech-card{
+        border-radius:30px;
+        min-height:98px;
+        padding:18px 21px;
+      }
+
+      .education-timeline{
+        grid-template-columns:1fr;
+      }
+
+      .education-card:first-child{
+        grid-column:auto;
+      }
+
+      .education-card{
+        gap:16px;
+        padding:22px 18px;
+      }
+
+      .floating-tile{
+        height:88px;
+        opacity:.55;
+        width:108px;
+      }
+
+      .tile-terminal{
+        left:-50px;
+        top:24vh;
+      }
+
+      .tile-globe{
+        right:-45px;
+        top:48vh;
+      }
+
+      .tile-router,
+      .tile-cpu,
+      .tile-outline{
+        display:none;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      *,
+      *::before,
+      *::after{
+        animation:none!important;
+        scroll-behavior:auto!important;
+        transition:none!important;
+      }
+
+      .reveal{
+        opacity:1;
+        transform:none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ambient-background" aria-hidden="true">
+  <div class="bg-glow glow1"></div>
+  <div class="bg-glow glow2"></div>
+  <div class="floating-tile tile-terminal"><i class="bi bi-terminal-fill"></i></div>
+  <div class="floating-tile tile-globe"><i class="bi bi-globe2"></i></div>
+  <div class="floating-tile tile-router"><i class="bi bi-router-fill"></i></div>
+  <div class="floating-tile tile-cpu"><i class="bi bi-cpu-fill"></i></div>
+  <div class="floating-tile tile-outline"><i class="bi bi-code-square"></i></div>
+</div>
+
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Chamroeun<span>.</span></a>
+
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item"><a class="nav-link" href="#about" data-i18n="nav.about">អំពីខ្ញុំ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#education" data-i18n="nav.education">ការសិក្សា</a></li>
+        <li class="nav-item"><a class="nav-link" href="#experience" data-i18n="nav.experience">បទពិសោធន៍</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills" data-i18n="nav.skills">ជំនាញ</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects" data-i18n="nav.projects">គម្រោង</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact" data-i18n="nav.contact">ទំនាក់ទំនង</a></li>
+      </ul>
+      <button class="language-toggle" id="languageToggle" type="button" aria-label="Switch to English">
+        <i class="bi bi-translate" aria-hidden="true"></i>
+        <span id="languageLabel">EN</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-6 hero-copy">
+        <div class="badge-custom">
+          <i class="bi bi-terminal-fill" aria-hidden="true"></i><span data-i18n="hero.badge">Linux Administrator • Network • Web • IoT</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span data-i18n="hero.greeting">សួស្ដី ខ្ញុំឈ្មោះ</span> <br>
+          <span class="gradient-text">Chamroeun</span>
+        </h1>
+
+        <p class="hero-text" data-i18n="hero.description">
+          ខ្ញុំផ្តោតលើការរៀបចំ Linux Server, Network Support, Web Development និង IoT Projects។ ខ្ញុំចូលចិត្តបង្កើតប្រព័ន្ធដែលមានសុវត្ថិភាព ងាយប្រើ និងមានការរចនាស្អាត។
+        </p>
+
+        <div class="voice-controls mt-4">
+          <button class="voice-button" id="voiceIntroButton" type="button">
+            <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
+            <span data-i18n="voice.play">ស្តាប់ការណែនាំ</span>
+          </button>
+          <span class="voice-status" id="voiceStatus" aria-live="polite"></span>
+          <audio id="khmerIntroAudio" preload="auto" src="asset/intro-km.mp3"></audio>
+        </div>
+
+        <!-- <div class="d-flex gap-3 flex-wrap mt-4">
+          <button class="btn-custom btn-primary-custom">
+            <span data-i18n="hero.viewProjects">មើលគម្រោង</span>
+          </button>
+
+          <button class="btn-custom btn-dark-custom">
+            <span data-i18n="hero.download">ទាញយក CV</span>
+          </button>
+        </div> -->
+      </div>
+
+      <div class="col-lg-6">
+        <div class="device-showcase">
+          <div class="profile-box mb-4 mx-auto">
+            <img src="/asset/my-profile.jpg" alt="Chamroeun">
+          </div>
+
+          <div class="tech-card-stack mt-5">
+            <div class="tech-card active">
+              <i class="bi bi-terminal-fill feature-icon" aria-hidden="true"></i>
+              <div>
+                <h5><span data-i18n="feature.linux">Linux Administration</span></h5>
+                <p class="mb-0">CentOS9 • Fedora</p>
+              </div>
+            </div>
+
+            <div class="tech-card">
+              <i class="bi bi-globe2 feature-icon" aria-hidden="true"></i>
+              <div>
+                <h5><span data-i18n="feature.web">Web Development</span></h5>
+                <p class="mb-0">HTML • CSS • Laravel</p>
+              </div>
+            </div>
+
+            <div class="tech-card">
+              <i class="bi bi-router-fill feature-icon" aria-hidden="true"></i>
+              <div>
+                <h5><span data-i18n="feature.network">Networking</span></h5>
+                <p class="mb-0">MikroTik • Cisco • VLAN • Routing</p>
+              </div>
+            </div>
+
+            <div class="tech-card">
+              <i class="bi bi-cpu-fill feature-icon" aria-hidden="true"></i>
+              <div>
+                <h5><span data-i18n="feature.iot">Embedded Systems</span></h5>
+                <p class="mb-0">ESP32 • Arduino • IoT</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="about" class="py-5">
+  <div class="container py-5">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <p class="section-subtitle" data-i18n="about.subtitle">អំពីខ្ញុំ</p>
+        <h2 class="section-title" data-i18n="about.title">បង្កើតប្រព័ន្ធឌីជីថលដែលមានស្ថេរភាព និងងាយប្រើ</h2>
+      </div>
+
+      <div class="col-lg-6">
+        <p class="hero-text" data-i18n="about.description">
+          ខ្ញុំចូលចិត្តដោះស្រាយបញ្ហាបច្ចេកទេស រៀបចំ Server, គ្រប់គ្រង User និង Permission, ព្រមទាំងអភិវឌ្ឍ Web និង IoT Projects។ គោលដៅរបស់ខ្ញុំគឺបង្កើតដំណោះស្រាយដែលដំណើរការល្អ និងអាចជឿទុកចិត្តបាន។
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="py-5">
+  <div class="container py-5">
+    <p class="section-subtitle" data-i18n="education.subtitle">ប្រវត្តិសិក្សា</p>
+    <h2 class="section-title" data-i18n="education.title">ប្រវត្តិសិក្សា និងការអប់រំរបស់ខ្ញុំ</h2>
+    <p class="hero-text" data-i18n="education.description">
+      ការសិក្សាផ្នែក Information Technology និង Electronics បានជួយពង្រឹងមូលដ្ឋានរបស់ខ្ញុំសម្រាប់ Linux, Networking និង IoT។
+    </p>
+
+    <div class="education-timeline">
+      <div class="glass-card education-card">
+        <div class="education-icon"><i class="bi bi-mortarboard-fill" aria-hidden="true"></i></div>
+        <div class="education-content">
+          <span class="project-category" data-i18n="education.universityLevel">សាកលវិទ្យាល័យ • ២០២៣ - បច្ចុប្បន្ន</span>
+          <h5 class="education-school" data-i18n="education.universitySchool">Build Bright University</h5>
+          <p class="education-program" data-i18n="education.universityProgram">ជំនាញ Information Technology</p>
+        </div>
+      </div>
+
+      <div class="glass-card education-card">
+        <div class="education-icon"><i class="bi bi-cpu-fill" aria-hidden="true"></i></div>
+        <div class="education-content">
+          <span class="project-category" data-i18n="education.diplomaLevel">សញ្ញាបត្រ • ២០២៣ - បច្ចុប្បន្ន</span>
+          <h5 class="education-school" data-i18n="education.diplomaSchool">National Institute of Angkor</h5>
+          <p class="education-program" data-i18n="education.diplomaProgram">ជំនាញ Electronics</p>
+        </div>
+      </div>
+
+      <div class="glass-card education-card">
+        <div class="education-icon"><i class="bi bi-building" aria-hidden="true"></i></div>
+        <div class="education-content">
+          <span class="project-category" data-i18n="education.highLevel">វិទ្យាល័យ • ២០២០ - ២០២៣</span>
+          <h5 class="education-school" data-i18n="education.highSchool">Phkam High School</h5>
+          <p class="education-program" data-i18n="education.highProgram">ការអប់រំកម្រិតមធ្យមសិក្សាទុតិយភូមិ</p>
+        </div>
+      </div>
+
+      <div class="glass-card education-card">
+        <div class="education-icon"><i class="bi bi-book-fill" aria-hidden="true"></i></div>
+        <div class="education-content">
+          <span class="project-category" data-i18n="education.secondaryLevel">អនុវិទ្យាល័យ • ២០១៧ - ២០២០</span>
+          <h5 class="education-school" data-i18n="education.secondarySchool">Koukathen Secondary School</h5>
+          <p class="education-program" data-i18n="education.secondaryProgram">ការអប់រំកម្រិតមធ្យមសិក្សាបឋមភូមិ</p>
+        </div>
+      </div>
+
+      <div class="glass-card education-card">
+        <div class="education-icon"><i class="bi bi-pencil-square" aria-hidden="true"></i></div>
+        <div class="education-content">
+          <span class="project-category" data-i18n="education.primaryLevel">បឋមសិក្សា • ២០១៤ - ២០១៧</span>
+          <h5 class="education-school" data-i18n="education.primarySchool">Treas Koukathen Primary School</h5>
+          <p class="education-program" data-i18n="education.primaryProgram">ការអប់រំកម្រិតបឋមសិក្សា</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="py-5">
+  <div class="container py-5">
+    <p class="section-subtitle" data-i18n="experience.subtitle">បទពិសោធន៍</p>
+    <h2 class="section-title" data-i18n="experience.title">បទពិសោធន៍ការងារ និងការបង្រៀន</h2>
+
+    <div class="row g-4 mt-4">
+      <div class="col-lg-6">
+        <div class="glass-card experience-card">
+          <span class="project-category" data-i18n="experience.ezecomPeriod">៣ខែ</span>
+          <h5 class="mt-3 mb-2" data-i18n="experience.ezecomTitle">Technical Support - Ezecom</h5>
+          <p class="mb-0 hero-text" data-i18n="experience.ezecomDesc">
+            គាំទ្រអតិថិជន និងជួយដោះស្រាយបញ្ហា Internet, Router, Network Connection និងការត្រួតពិនិត្យសេវាបច្ចេកទេស។
+          </p>
+        </div>
+      </div>
+    
+      <div class="col-lg-6">
+        <div class="glass-card experience-card">
+          <span class="project-category" data-i18n="experience.robotechPeriod">១ឆ្នាំ</span>
+          <h5 class="mt-3 mb-2" data-i18n="experience.robotechTitle">Robotics & IoT Teaching Assistant - Robotech Academy</h5>
+          <p class="mb-0 hero-text" data-i18n="experience.robotechDesc">
+            ជួយបង្រៀន Robotics និង IoT, រៀបចំឧបករណ៍, គាំទ្រសិស្សក្នុងការសរសេរកូដ និងបង្កើត Projects ជាមួយ Arduino និង ESP32។
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="py-5">
+  <div class="container py-5">
+    <p class="section-subtitle" data-i18n="skills.subtitle">ជំនាញ</p>
+    <h2 class="section-title" data-i18n="skills.title">ជំនាញរបស់ខ្ញុំ</h2>
+
+    <div class="row g-4 mt-4">
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="skill-box">មិនចេះអ្វីទេ</div>
+      </div>
+
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="skill-box">Networking</div>
+      </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="skill-box">Linux Server</div>
+        </div>
+
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="skill-box">IoT</div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="py-5">
+  <div class="container py-5">
+    <p class="section-subtitle" data-i18n="projects.subtitle">គម្រោង</p>
+    <h2 class="section-title" data-i18n="projects.title">គម្រោងរបស់ខ្ញុំ</h2>
+
+    <div class="row g-4 mt-4">
+         <div class="col-lg-4">
+        <div class="glass-card project-card">
+          <span class="project-category">Waitting</span>
+          <h3 class="mt-3" data-i18n="projects.upCommingTitle">Up Comming...</h3>
+          <p class="hero-text" data-i18n="projects.upCommingDesc">
+                កំពុងរៀបចំគម្រោងចាស់ៗ សូមរង់ចាំមើលទាំងអស់នេះនៅពេលខាងមុខ!
+          </p>
+        </div>
+      </div>
+
+      <!-- <div class="col-lg-4">
+        <div class="glass-card project-card">
+          <span class="project-category">Linux Server</span>
+          <h3 class="mt-3" data-i18n="projects.linuxTitle">ការគ្រប់គ្រង Server</h3>
+          <p class="hero-text" data-i18n="projects.linux">
+            រៀបចំ Linux Server, SSH Access, Web Server, User Permission និងការកំណត់សុវត្ថិភាពសម្រាប់ការប្រើប្រាស់ប្រកបដោយស្ថេរភាព។
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card project-card">
+          <span class="project-category">IoT</span>
+          <h3 class="mt-3" data-i18n="projects.iotTitle">ប្រព័ន្ធស្វ័យប្រវត្តិឆ្លាតវៃ</h3>
+          <p class="hero-text" data-i18n="projects.iot">
+            បង្កើត Smart Home និង Automation System ដោយប្រើ ESP32, Arduino, Sensors និងការគ្រប់គ្រងឧបករណ៍តាមបច្ចេកវិទ្យា IoT។
+          </p>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="glass-card project-card">
+          <span class="project-category">Web App</span>
+          <h3 class="mt-3" data-i18n="projects.webTitle">Portfolio ទំនើប</h3>
+          <p class="hero-text" data-i18n="projects.web">
+            រចនា Portfolio Website ដែលមាន UI ស្អាត Responsive Animation និងប្តូរភាសា Khmer/English ដោយប្រើ HTML, CSS, Bootstrap និង JavaScript។
+          </p>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="py-5">
+  <div class="container py-5">
+    <div class="glass-card text-center p-5">
+      <p class="section-subtitle" data-i18n="contact.subtitle">ទំនាក់ទំនង</p>
+
+      <h2 class="section-title">
+        <span data-i18n="contact.title">តោះបង្កើត Project ជាមួយគ្នា</span> <i class="bi bi-rocket-takeoff-fill cta-icon" aria-hidden="true"></i>
+      </h2>
+
+      <p class="hero-text" data-i18n="contact.description">
+        អាចទាក់ទងខ្ញុំសម្រាប់ Web Project, Linux/Network Support, IoT Project ឬការពិភាក្សាអំពីបច្ចេកវិទ្យា។
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap mt-4">
+        <button class="btn-custom btn-primary-custom">
+          <i class="bi bi-envelope-fill" aria-hidden="true"></i><span data-i18n="contact.email">ទាក់ទងខ្ញុំ</span>
+        </button>
+
+        <button class="btn-custom btn-dark-custom">
+          <i class="bi bi-github" aria-hidden="true"></i>GitHub
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span data-i18n="footer.text">© 2026 Chamroeun</span>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  const translations = {
+    km: {
+      'nav.about': 'អំពីខ្ញុំ',
+      'nav.education': 'ការសិក្សា',
+      'nav.experience': 'បទពិសោធន៍',
+      'nav.skills': 'ជំនាញ',
+      'nav.projects': 'គម្រោង',
+      'nav.contact': 'ទំនាក់ទំនង',
+      'hero.badge': 'Network • Web • IoT',
+      'hero.greeting': 'សួស្ដី ខ្ញុំឈ្មោះ',
+      'hero.description': 'ខ្ញុំផ្តោតលើការរៀបចំ Linux Server, Network Support, Web Development និង IoT Projects។ ខ្ញុំចូលចិត្តបង្កើតប្រព័ន្ធដែលមានសុវត្ថិភាព ងាយប្រើ និងមានការរចនាស្អាត។',
+      'hero.viewProjects': 'មើលគម្រោង',
+      'hero.download': 'ទាញយក CV',
+      'voice.play': 'ស្តាប់ការណែនាំ',
+      'voice.stop': 'បញ្ឈប់សំឡេង',
+      'voice.speaking': 'កំពុងអាន...',
+      'voice.tapToPlay': 'ចុចប៊ូតុងដើម្បីស្តាប់សំឡេង',
+      'voice.addKhmerAudio': 'សូមបន្ថែមឯកសារសំឡេង Khmer ទៅ asset/intro-km.mp3',
+      'voice.unavailable': 'កម្មវិធីរុករកនេះមិនគាំទ្រសំឡេងអានទេ',
+      'feature.linux': 'ការគ្រប់គ្រង Linux',
+      'feature.web': 'ការអភិវឌ្ឍ Web',
+      'feature.network': 'បណ្តាញ',
+      'feature.iot': 'ប្រព័ន្ធ Embedded',
+      'about.subtitle': 'អំពីខ្ញុំ',
+      'about.title': 'បង្កើតប្រព័ន្ធឌីជីថលដែលមានស្ថេរភាព និងងាយប្រើ',
+      'about.description': 'ខ្ញុំចូលចិត្តដោះស្រាយបញ្ហាបច្ចេកទេស រៀបចំ Server, គ្រប់គ្រង User និង Permission, ព្រមទាំងអភិវឌ្ឍ Web និង IoT Projects។ គោលដៅរបស់ខ្ញុំគឺបង្កើតដំណោះស្រាយដែលដំណើរការល្អ និងអាចជឿទុកចិត្តបាន។',
+      'education.subtitle': 'ប្រវត្តិសិក្សា',
+      'education.title': 'ប្រវត្តិសិក្សា និងការអប់រំរបស់ខ្ញុំ',
+      'education.description': 'ការសិក្សាផ្នែក Information Technology និង Electronics បានជួយពង្រឹងមូលដ្ឋានរបស់ខ្ញុំសម្រាប់ Linux, Networking និង IoT។',
+      'education.universityLevel': 'សាកលវិទ្យាល័យ • ២០២៣ - បច្ចុប្បន្ន',
+      'education.universitySchool': 'សាកលវិទ្យាល័យ បៀលប្រាយ​ខេត្តសៀមរាប',
+      'education.universityProgram': 'ជំនាញ ព័ត៌មានវិទ្យា',
+      'education.diplomaLevel': 'សញ្ញាបត្រ • ២០២៤ - បច្ចុប្បន្ន',
+      'education.diplomaSchool': 'វិទ្យាស្ថានជាតិពហុបច្ចេកទេសអង្គរ',
+      'education.diplomaProgram': 'ជំនាញ Electronics',
+      'education.highLevel': 'វិទ្យាល័យ • ២០២០ - ២០២៣',
+      'education.highSchool': 'វិទ្យាល័យ ផ្គាំ',
+      'education.highProgram': 'ការអប់រំកម្រិតមធ្យមសិក្សាទុតិយភូមិ',
+      'education.secondaryLevel': 'អនុវិទ្យាល័យ • ២០១៧ - ២០២០',
+      'education.secondarySchool': 'វិទ្យាល័យ គោកកឋិន',
+      'education.secondaryProgram': 'ការអប់រំកម្រិតមធ្យមសិក្សាបឋមភូមិ',
+      'education.primaryLevel': 'បឋមសិក្សា • ២០១៤ - ២០១៧',
+      'education.primarySchool': 'សាលាបឋមសិក្សា ទ្រាស គោកកឋិន',
+      'education.primaryProgram': 'ការអប់រំកម្រិតបឋមសិក្សា',
+      'experience.subtitle': 'បទពិសោធន៍',
+      'experience.title': 'បទពិសោធន៍ការងារ និងការបង្រៀន',
+      'experience.ezecomPeriod': '៣ខែ',
+      'experience.ezecomTitle': 'Technical Support - Ezecom',
+      'experience.ezecomDesc': 'គាំទ្រអតិថិជន និងជួយដោះស្រាយបញ្ហា Internet, Router, Network Connection និងការត្រួតពិនិត្យសេវាបច្ចេកទេស។',
+      'experience.robotechPeriod': '១ឆ្នាំ',
+      'experience.robotechTitle': 'Robotics & IoT Teaching Assistant - Robotech Academy',
+      'experience.robotechDesc': 'ជួយបង្រៀន Robotics និង IoT, រៀបចំឧបករណ៍, គាំទ្រសិស្សក្នុងការសរសេរកូដ និងបង្កើត Projects ជាមួយ Arduino និង ESP32។',
+      'skills.subtitle': 'ជំនាញ',
+      'skills.title': 'ជំនាញរបស់ខ្ញុំ',
+      'projects.subtitle': 'គម្រោង',
+      'projects.title': 'គម្រោងរបស់ខ្ញុំ',
+      'projects.upCommingTitle': 'Up Comming...',
+      'projects.upCommingDesc': 'កំពុងរៀបចំគម្រោងចាស់ៗ សូមរង់ចាំមើលទាំងអស់នេះនៅពេលខាងមុខ!',
+      'projects.linuxTitle': 'ការគ្រប់គ្រង Server',
+      'projects.linux': 'រៀបចំ Linux Server, SSH Access, Web Server, User Permission និងការកំណត់សុវត្ថិភាពសម្រាប់ការប្រើប្រាស់ប្រកបដោយស្ថេរភាព។',
+      'projects.iotTitle': 'ប្រព័ន្ធស្វ័យប្រវត្តិឆ្លាតវៃ',
+      'projects.iot': 'បង្កើត Smart Home និង Automation System ដោយប្រើ ESP32, Arduino, Sensors និងការគ្រប់គ្រងឧបករណ៍តាមបច្ចេកវិទ្យា IoT។',
+      'projects.webTitle': 'Portfolio ទំនើប',
+      'projects.web': 'រចនា Portfolio Website ដែលមាន UI ស្អាត Responsive Animation និងប្តូរភាសា Khmer/English ដោយប្រើ HTML, CSS, Bootstrap និង JavaScript។',
+      'contact.subtitle': 'ទំនាក់ទំនង',
+      'contact.title': 'តោះហៅខ្ញុំមកលេងបាល់ទាត់ជាមួយគ្នា',
+      'contact.description': 'អាចទាក់ទងខមកលេងខ្ញុំផង',
+      'contact.email': 'ទាក់ទងខ្ញុំ',
+      'footer.text': '©​ ២០២៦​ ចំរើន'
+    },
+    en: {
+      'nav.about': 'About',
+      'nav.education': 'Education',
+      'nav.experience': 'Experience',
+      'nav.skills': 'Skills',
+      'nav.projects': 'Projects',
+      'nav.contact': 'Contact',
+      'hero.badge': 'Network • Web • IoT',
+      'hero.greeting': 'Hello, I am',
+      'hero.description': 'I focus on Linux server administration, network support, web development, and IoT projects, building systems that are secure, practical, and easy to use.',
+      'hero.viewProjects': 'View Projects',
+      'hero.download': 'Download CV',
+      'voice.play': 'Listen to Introduction',
+      'voice.stop': 'Stop Voice',
+      'voice.speaking': 'Speaking...',
+      'voice.tapToPlay': 'Tap the button to hear the introduction',
+      'voice.addKhmerAudio': 'Add a natural Khmer narration file at asset/intro-km.mp3',
+      'voice.unavailable': 'Text-to-speech is not supported in this browser',
+      'feature.linux': 'Linux Administration',
+      'feature.web': 'Web Development',
+      'feature.network': 'Networking',
+      'feature.iot': 'Embedded Systems',
+      'about.subtitle': 'About Me',
+      'about.title': 'Building reliable and user-friendly digital systems',
+      'about.description': 'I enjoy solving technical problems, configuring servers, managing users and permissions, and developing web and IoT projects. My goal is to create solutions that work well and can be trusted.',
+      'education.subtitle': 'Study History',
+      'education.title': 'My Academic Background',
+      'education.description': 'My studies in Information Technology and Electronics strengthen the foundation for my Linux, networking, and IoT work.',
+      'education.universityLevel': 'University • 2023 - Present',
+      'education.universitySchool': 'Build Bright University',
+      'education.universityProgram': 'Information Technology',
+      'education.diplomaLevel': 'Diploma • 2024 - Present',
+      'education.diplomaSchool': 'National Polytechnic Institute of Angkor',
+      'education.diplomaProgram': 'Electronics',
+      'education.highLevel': 'High School • 2020 - 2023',
+      'education.highSchool': 'Phkam High School',
+      'education.highProgram': 'Upper Secondary Education',
+      'education.secondaryLevel': 'Secondary School • 2017 - 2020',
+      'education.secondarySchool': 'Koukathen Secondary School',
+      'education.secondaryProgram': 'Lower Secondary Education',
+      'education.primaryLevel': 'Primary School • 2014 - 2017',
+      'education.primarySchool': 'Treas Koukathen Primary School',
+      'education.primaryProgram': 'Primary Education',
+      'experience.subtitle': 'Experience',
+      'experience.title': 'Work and Teaching Experience',
+      'experience.ezecomPeriod': '3 Months',
+      'experience.ezecomTitle': 'Technical Support - Ezecom',
+      'experience.ezecomDesc': 'Supported customers by troubleshooting internet connections, routers, network issues, and technical service checks.',
+      'experience.robotechPeriod': '1 Year',
+      'experience.robotechTitle': 'Robotics & IoT Teaching Assistant - Robotech Academy',
+      'experience.robotechDesc': 'Assisted with Robotics and IoT classes, prepared equipment, and guided students in coding projects using Arduino and ESP32.',
+      'skills.subtitle': 'Skills',
+      'skills.title': 'My Technical Skills',
+      'projects.upCommingTitle': 'Up Comming...',
+      'projects.upCommingDesc': 'Organizing past projects, stay tuned to see them all in the near future!',
+      'projects.subtitle': 'Projects',
+      'projects.title': 'My Projects',
+      'projects.linuxTitle': 'Server Administration',
+      'projects.linux': 'Configured Linux servers, SSH access, web services, user permissions, and security settings for reliable system operation.',
+      'projects.iotTitle': 'Smart Automation',
+      'projects.iot': 'Built smart home and automation systems using ESP32, Arduino, sensors, and IoT device control.',
+      'projects.webTitle': 'Modern Portfolio',
+      'projects.web': 'Designed a responsive animated portfolio with Khmer/English language switching using HTML, CSS, Bootstrap, and JavaScript.',
+      'contact.subtitle': 'Contact',
+      'contact.title': 'Let call me for play football together',
+      'contact.description': 'Feel free for contact me.',
+      'contact.email': 'Contact Me',
+      'footer.text': '© 2026 Chamroeun Portfolio'
+    }
+  };
+
+  const navbar = document.querySelector('.navbar');
+  const languageToggle = document.getElementById('languageToggle');
+  const languageLabel = document.getElementById('languageLabel');
+  const voiceIntroButton = document.getElementById('voiceIntroButton');
+  const voiceStatus = document.getElementById('voiceStatus');
+  const voiceIcon = voiceIntroButton.querySelector('i');
+  const khmerIntroAudio = document.getElementById('khmerIntroAudio');
+  const speechAvailable = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+  let introductionStarted = false;
+  const techCards = document.querySelectorAll('.tech-card');
+  const revealElements = document.querySelectorAll(
+    '.hero-copy > *, .hero .profile-box, .tech-card, section:not(.hero) .section-subtitle, section:not(.hero) .section-title, .education-card, .experience-card, section:not(.hero) .hero-text, .skill-box, .project-card, #contact .glass-card'
+  );
+
+  function setLanguage(language) {
+    const selectedLanguage = translations[language] ? language : 'km';
+
+    stopIntroduction();
+
+    document.documentElement.lang = selectedLanguage;
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      element.textContent = translations[selectedLanguage][element.dataset.i18n];
+    });
+
+    languageLabel.textContent = selectedLanguage === 'km' ? 'EN' : 'ខ្មែរ';
+    languageToggle.setAttribute(
+      'aria-label',
+      selectedLanguage === 'km' ? 'Switch to English' : 'ប្តូរទៅភាសាខ្មែរ'
+    );
+    voiceIntroButton.disabled = selectedLanguage === 'en' && !speechAvailable;
+    localStorage.setItem('portfolio-language', selectedLanguage);
+    updateVoiceState(false);
+  }
+
+  function updateVoiceState(isSpeaking, statusKey = '') {
+    const language = document.documentElement.lang === 'en' ? 'en' : 'km';
+
+    voiceIntroButton.classList.toggle('is-speaking', isSpeaking);
+    voiceIcon.className = isSpeaking ? 'bi bi-stop-fill' : 'bi bi-volume-up-fill';
+    voiceIntroButton.querySelector('span').textContent =
+      translations[language][isSpeaking ? 'voice.stop' : 'voice.play'];
+    voiceStatus.textContent = statusKey ? translations[language][statusKey] : '';
+  }
+
+  function getPreferredVoice(language) {
+    return window.speechSynthesis.getVoices().find(voice =>
+      voice.lang.toLowerCase().startsWith(language)
+    );
+  }
+
+  function stopIntroduction() {
+    if (speechAvailable && window.speechSynthesis.speaking) {
+      window.speechSynthesis.cancel();
+    }
+
+    khmerIntroAudio.pause();
+    khmerIntroAudio.currentTime = 0;
+  }
+
+  function playKhmerRecording() {
+    khmerIntroAudio.currentTime = 0;
+    const playback = khmerIntroAudio.play();
+
+    if (playback) {
+      playback.catch(() => updateVoiceState(false, 'voice.tapToPlay'));
+    }
+  }
+
+  function speakHeroIntroduction(isAutomatic = false) {
+    const language = document.documentElement.lang === 'en' ? 'en' : 'km';
+
+    if (language === 'km') {
+      if (!khmerIntroAudio.paused) {
+        if (!isAutomatic) {
+          stopIntroduction();
+          updateVoiceState(false);
+        }
+        return;
+      }
+
+      playKhmerRecording();
+      return;
+    }
+
+    if (!speechAvailable) {
+      updateVoiceState(false, 'voice.unavailable');
+      voiceIntroButton.disabled = true;
+      return;
+    }
+
+    if (window.speechSynthesis.speaking) {
+      if (!isAutomatic) {
+        window.speechSynthesis.cancel();
+        updateVoiceState(false);
+      }
+      return;
+    }
+
+    const introText = `${translations[language]['hero.greeting']} Chamroeun. ${translations[language]['hero.description']}`;
+    const utterance = new SpeechSynthesisUtterance(introText);
+    const preferredVoice = getPreferredVoice('en');
+
+    utterance.lang = 'en-US';
+    utterance.rate = 0.92;
+    utterance.pitch = 1;
+    if (preferredVoice) {
+      utterance.voice = preferredVoice;
+    }
+
+    utterance.onstart = () => {
+      introductionStarted = true;
+      removeVoiceFallback();
+      updateVoiceState(true, 'voice.speaking');
+    };
+    utterance.onend = () => updateVoiceState(false);
+    utterance.onerror = () => updateVoiceState(false, 'voice.tapToPlay');
+
+    stopIntroduction();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function removeVoiceFallback() {
+    document.removeEventListener('click', startVoiceAfterInteraction);
+    document.removeEventListener('keydown', startVoiceAfterInteraction);
+  }
+
+  function startVoiceAfterInteraction(event) {
+    if (event.target instanceof Element && event.target.closest('#voiceIntroButton')) {
+      return;
+    }
+
+    if (!introductionStarted && (!speechAvailable || !window.speechSynthesis.speaking)) {
+      speakHeroIntroduction(true);
+    }
+  }
+
+  khmerIntroAudio.addEventListener('play', () => {
+    introductionStarted = true;
+    removeVoiceFallback();
+    updateVoiceState(true, 'voice.speaking');
+  });
+  khmerIntroAudio.addEventListener('ended', () => updateVoiceState(false));
+  khmerIntroAudio.addEventListener('error', () => updateVoiceState(false, 'voice.addKhmerAudio'));
+
+  revealElements.forEach((element, index) => {
+    element.classList.add('reveal');
+    element.style.setProperty('--reveal-delay', `${Math.min(index % 4, 3) * 90}ms`);
+  });
+
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  revealElements.forEach(element => revealObserver.observe(element));
+
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  languageToggle.addEventListener('click', () => {
+    setLanguage(document.documentElement.lang === 'km' ? 'en' : 'km');
+  });
+
+  voiceIntroButton.addEventListener('click', () => {
+    speakHeroIntroduction();
+  });
+
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let activeCard = 0;
+    window.setInterval(() => {
+      techCards[activeCard].classList.remove('active');
+      activeCard = (activeCard + 1) % techCards.length;
+      techCards[activeCard].classList.add('active');
+    }, 1900);
+  }
+
+  setLanguage(localStorage.getItem('portfolio-language') || 'km');
+
+  if (speechAvailable || document.documentElement.lang === 'km') {
+    document.addEventListener('click', startVoiceAfterInteraction);
+    document.addEventListener('keydown', startVoiceAfterInteraction);
+    window.setTimeout(() => speakHeroIntroduction(true), 500);
+  } else if (!speechAvailable) {
+    updateVoiceState(false, 'voice.unavailable');
+    voiceIntroButton.disabled = true;
+  }
+</script>
+
+</body>
+</html>
